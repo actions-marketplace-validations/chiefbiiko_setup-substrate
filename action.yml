@@ -7,7 +7,7 @@ inputs:
     required: false
     default: nightly
   target-dir:
-    description: Rust target dir that will be set as one of the cache paths
+    description: Main Rust target dir to be cached
     required: false
     default: ${{ github.workspace }}/target/
 
@@ -18,18 +18,6 @@ outputs:
   cargo-version:
     description: cargo version
     value: ${{ steps.reporter.outputs.cargo-version }}
-  subkey-version:
-    description: subkey version
-    value: ${{ steps.reporter.outputs.subkey-version }}
-  moonkey-version:
-    description: moonkey version
-    value: ${{ steps.reporter.outputs.moonkey-version }}
-  subwasm-version:
-    description: subwasm version
-    value: ${{ steps.reporter.outputs.subwasm-version }}
-  cargo-contract-version:
-    description: cargo-contract version
-    value: ${{ steps.reporter.outputs.cargo-contract-version }}
   zombienet-version:
     description: zombienet version
     value: ${{ steps.reporter.outputs.zombienet-version }}
@@ -61,10 +49,6 @@ runs:
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
     - run: |
-        cargo install subkey --git https://github.com/paritytech/substrate
-        cargo install moonkey --git https://github.com/PureStake/moonbeam
-        cargo install --git https://github.com/chevdor/subwasm
-        cargo install cargo-contract
         sudo curl -fL -o /usr/local/bin/zombienet https://github.com/paritytech/zombienet/releases/download/v1.2.59/zombienet-linux
         sudo chmod +x /usr/local/bin/zombienet
       shell: bash
@@ -73,9 +57,5 @@ runs:
       run: |
         echo rust-version=\"$(rustc -V)\" >> $GITHUB_OUTPUT
         echo cargo-version=\"$(cargo -V)\" >> $GITHUB_OUTPUT
-        echo subkey-version=\"$(subkey --version)\" >> $GITHUB_OUTPUT
-        echo moonkey-version=0.1.1 >> $GITHUB_OUTPUT
-        echo subwasm-version=\"$(subwasm --version)\" >> $GITHUB_OUTPUT
-        echo cargo-contract-version=\"$(cargo contract --version)\" >> $GITHUB_OUTPUT
-        echo zombienet-version=v1.2.59 >> $GITHUB_OUTPUT
+        echo zombienet-version=\"$(zombienet version)\" >> $GITHUB_OUTPUT
       shell: bash
