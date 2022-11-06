@@ -40,7 +40,7 @@ runs:
     - run: if [[ $(uname -s) != Linux ]]; then echo $(uname -s) not yet supported >&2; exit 1; fi
       shell: bash
 
-    - run: sudo apt install -y clang cmake curl libssl-dev libudev-dev llvm
+    - run: sudo apt install -y clang cmake curl libssl-dev libudev-dev llvm protobuf-compiler
       shell: bash
 
     - run: |

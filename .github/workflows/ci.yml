@@ -12,9 +12,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - id: setup-substrate
+      - name: setup substrate
+        id: setup-substrate
         uses: ./
 
-      - run: |
+      - name: tool versions
+        run: |
           echo rust version ${{ steps.setup-substrate.outputs.rust-version }}
           echo cargo version ${{ steps.setup-substrate.outputs.cargo-version }}
+          echo subkey version ${{ steps.setup-substrate.outputs.subkey-version }}
+          echo moonkey version ${{ steps.setup-substrate.outputs.moonkey-version }}
+          echo subwasm version ${{ steps.setup-substrate.outputs.subwasm-version }}
+          echo cargo-contract version ${{ steps.setup-substrate.outputs.cargo-contract-version }}
+          echo zombienet version ${{ steps.setup-substrate.outputs.zombienet-version }}
