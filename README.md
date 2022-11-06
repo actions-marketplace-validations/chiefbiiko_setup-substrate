@@ -10,8 +10,8 @@ Supports `ubuntu-*` runners only for now.
 
 ## Usage
 
-```bash
-- uses: chiefbiiko/setup-substrate
+```yml
+- uses: chiefbiiko/setup-substrate@v0
 ```
 
 ## Inputs
