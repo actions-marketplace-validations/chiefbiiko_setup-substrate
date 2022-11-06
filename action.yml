@@ -1,5 +1,9 @@
 name: setup-substrate
 description: Installs a handy Substrate CI toolset
+author: chiefbiiko
+branding:
+  icon: link
+  color: purple
 
 inputs:
   nightly-version:
@@ -14,13 +18,13 @@ inputs:
 outputs:
   rust-version:
     description: rustc version
-    value: ${{ steps.reporter.outputs.rust-version }}
+    value: ${{ steps.versions.outputs.rust-version }}
   cargo-version:
     description: cargo version
-    value: ${{ steps.reporter.outputs.cargo-version }}
+    value: ${{ steps.versions.outputs.cargo-version }}
   zombienet-version:
     description: zombienet version
-    value: ${{ steps.reporter.outputs.zombienet-version }}
+    value: ${{ steps.versions.outputs.zombienet-version }}
 
 runs:
   using: composite
@@ -53,9 +57,9 @@ runs:
         sudo chmod +x /usr/local/bin/zombienet
       shell: bash
 
-    - id: reporter
+    - id: versions
       run: |
-        echo rust-version=\"$(rustc -V)\" >> $GITHUB_OUTPUT
-        echo cargo-version=\"$(cargo -V)\" >> $GITHUB_OUTPUT
-        echo zombienet-version=\"$(zombienet version)\" >> $GITHUB_OUTPUT
+        echo rust-version=$(rustc -V) >> $GITHUB_OUTPUT
+        echo cargo-version=$(cargo -V) >> $GITHUB_OUTPUT
+        echo zombienet-version=$(zombienet version) >> $GITHUB_OUTPUT
       shell: bash
