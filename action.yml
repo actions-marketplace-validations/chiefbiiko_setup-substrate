@@ -1,5 +1,5 @@
 name: setup-substrate
-description: Installs a handy Substrate CI toolset
+description: Installs a Substrate Rust toolchain
 author: chiefbiiko
 branding:
   icon: link

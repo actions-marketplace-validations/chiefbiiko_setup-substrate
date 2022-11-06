@@ -6,7 +6,7 @@ A GitHub action that installs a Substrate Rust toolchain.
 
 [`zombienet`](https://github.com/paritytech/zombienet) is included in the installation.
 
-Supports `ubuntu-*` runners only for now.
+Supports Linux runners only for now.
 
 ## Usage
 
