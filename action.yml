@@ -59,7 +59,7 @@ runs:
 
     - id: versions
       run: |
-        echo rust-version=$(rustc -V) >> $GITHUB_OUTPUT
-        echo cargo-version=$(cargo -V) >> $GITHUB_OUTPUT
-        echo zombienet-version=$(zombienet version) >> $GITHUB_OUTPUT
+        echo rust-version=\"$(rustc -V)\" >> $GITHUB_OUTPUT
+        echo cargo-version=\"$(cargo -V)\" >> $GITHUB_OUTPUT
+        echo zombienet-version=\"$(zombienet version)\" >> $GITHUB_OUTPUT
       shell: bash
