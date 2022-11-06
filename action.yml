@@ -44,7 +44,6 @@ runs:
           ~/.cargo/git/db/
           ${{ inputs.target-dir }}
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-      shell: bash
 
     - run: |
         cargo install subkey --git https://github.com/paritytech/substrate
