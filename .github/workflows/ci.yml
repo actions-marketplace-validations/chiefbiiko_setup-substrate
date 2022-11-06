@@ -13,8 +13,8 @@ jobs:
       - uses: actions/checkout@v3
 
       - id: setup-substrate
-        uses: ./setup-substrate
+        uses: .
 
       - run: |
-          echo "rust version ${{ steps.setup-substrate.outputs.rust-version }}"
-          echo "cargo version ${{ steps.setup-substrate.outputs.cargo-version }}"
+          echo rust version ${{ steps.setup-substrate.outputs.rust-version }}
+          echo cargo version ${{ steps.setup-substrate.outputs.cargo-version }}
