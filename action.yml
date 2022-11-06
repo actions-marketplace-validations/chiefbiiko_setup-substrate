@@ -13,11 +13,26 @@ inputs:
 
 outputs:
   rust-version:
-    description: Installed Rust nightly toolchain
+    description: rustc version
     value: ${{ steps.reporter.outputs.rust-version }}
   cargo-version:
-    description: Installed cargo version
+    description: cargo version
     value: ${{ steps.reporter.outputs.cargo-version }}
+  subkey-version:
+    description: subkey version
+    value: ${{ steps.reporter.outputs.subkey-version }}
+  moonkey-version:
+    description: moonkey version
+    value: ${{ steps.reporter.outputs.moonkey-version }}
+  subwasm-version:
+    description: subwasm version
+    value: ${{ steps.reporter.outputs.subwasm-version }}
+  cargo-contract-version:
+    description: cargo-contract version
+    value: ${{ steps.reporter.outputs.cargo-contract-version }}
+  zombienet-version:
+    description: zombienet version
+    value: ${{ steps.reporter.outputs.zombienet-version }}
 
 runs:
   using: composite
@@ -58,4 +73,9 @@ runs:
       run: |
         echo rust-version=\"$(rustc -V)\" >> $GITHUB_OUTPUT
         echo cargo-version=\"$(cargo -V)\" >> $GITHUB_OUTPUT
+        echo subkey-version=\"$(subkey --version)\" >> $GITHUB_OUTPUT
+        echo moonkey-version=0.1.1 >> $GITHUB_OUTPUT
+        echo subwasm-version=\"$(subwasm --version)\" >> $GITHUB_OUTPUT
+        echo cargo-contract-version=\"$(cargo contract --version)\" >> $GITHUB_OUTPUT
+        echo zombienet-version=v1.2.59 >> $GITHUB_OUTPUT
       shell: bash
