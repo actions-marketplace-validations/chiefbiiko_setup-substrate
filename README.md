@@ -11,7 +11,7 @@ Supports Linux runners only for now.
 ## Usage
 
 ```yml
-- uses: chiefbiiko/setup-substrate@v0.1.0
+- uses: chiefbiiko/setup-substrate@v0.1.1
 ```
 
 ## Inputs

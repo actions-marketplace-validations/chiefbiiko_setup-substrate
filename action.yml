@@ -50,7 +50,7 @@ runs:
           ~/.cargo/registry/cache/
           ~/.cargo/git/db/
           ${{ inputs.target-dir }}
-        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        key: ${{ runner.os }}-${{ github.workflow }}-${{ github.job }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
     - run: |
         sudo curl -fL -o /usr/local/bin/zombienet https://github.com/paritytech/zombienet/releases/download/v1.2.59/zombienet-linux
