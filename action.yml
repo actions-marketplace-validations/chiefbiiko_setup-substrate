@@ -1,0 +1,56 @@
+name: setup-substrate
+description: Installs a handy Substrate CI toolset
+
+inputs:
+  nightly-version:
+    description: Nightly Rust toolchain to use as default
+    required: false
+    default: nightly
+  target-dir:
+    description: Rust target dir that will be set as one of the cache paths
+    required: false
+    default: ${{ github.workspace }}/target/
+
+outputs:
+  rust-version:
+    description: Installed Rust nightly toolchain
+    value: ${{ steps.reporter.outputs.rust-version }}
+  cargo-version:
+    description: Installed cargo version
+    value: ${{ steps.reporter.outputs.cargo-version }}
+
+runs:
+  using: composite
+  steps:
+    - run: if [[ $(uname -s) != Linux ]]; then echo $(uname -s) not yet supported >&2; exit 1; fi
+
+    - run: sudo apt install -y clang cmake curl libssl-dev libudev-dev llvm
+
+    - run: |
+        curl -sSf https://sh.rustup.rs | sh -s -- --default-toolchain ${{ inputs.nightly-version }} --profile minimal -c rustfmt clippy -y
+        source ~/.cargo/env
+        rustup update stable ${{ inputs.nightly-version }}
+        rustup target add wasm32-unknown-unknown --toolchain ${{ inputs.nightly-version }}
+
+    - uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          ${{ inputs.target-dir }}
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+    - run: |
+        cargo install subkey --git https://github.com/paritytech/substrate
+        cargo install moonkey --git https://github.com/PureStake/moonbeam
+        cargo install --git https://github.com/chevdor/subwasm
+        cargo install cargo-contract
+        sudo curl -fL -o /usr/local/bin/zombienet https://github.com/paritytech/zombienet/releases/download/v1.2.59/zombienet-linux
+        sudo chmod +x /usr/local/bin/zombienet
+
+    - id: reporter
+      run: |
+        echo rust-version=\"$(rustc -V)\" >> $GITHUB_OUTPUT
+        echo cargo-version=\"$(cargo -V)\" >> $GITHUB_OUTPUT
