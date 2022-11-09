@@ -29,10 +29,16 @@ outputs:
 runs:
   using: composite
   steps:
-    - run: if [[ $(uname -s) != Linux ]]; then echo $(uname -s) not yet supported >&2; exit 1; fi
-      shell: bash
-
-    - run: sudo apt install -y clang cmake curl libssl-dev libudev-dev llvm protobuf-compiler
+    - run: |
+        if [[ ${{ runner.os }} == Linux ]]; then
+          sudo apt install -y clang cmake libssl-dev libudev-dev llvm protobuf-compiler
+        elif [[ ${{ runner.os }} == macOS ]]; then
+          brew install cmake openssl protobuf
+        else
+          echo ${{ runner.os }} not supported >&2
+          exit 1
+        fi
+        echo OS=$(echo ${{ runner.os }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
       shell: bash
 
     - run: |
@@ -50,10 +56,10 @@ runs:
           ~/.cargo/registry/cache/
           ~/.cargo/git/db/
           ${{ inputs.target-dir }}
-        key: ${{ runner.os }}-${{ github.workflow }}-${{ github.job }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        key: ${{ env.OS }}-${{ github.workflow }}-${{ github.job }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
     - run: |
-        sudo curl -fL -o /usr/local/bin/zombienet https://github.com/paritytech/zombienet/releases/download/v1.2.59/zombienet-linux
+        sudo curl -fL -o /usr/local/bin/zombienet https://github.com/paritytech/zombienet/releases/download/v1.2.59/zombienet-${{ env.OS }}
         sudo chmod +x /usr/local/bin/zombienet
       shell: bash
 

@@ -6,12 +6,10 @@ A GitHub action that installs a Substrate Rust toolchain.
 
 [`zombienet`](https://github.com/paritytech/zombienet) is included in the installation.
 
-Supports Linux runners only for now.
-
 ## Usage
 
 ```yml
-- uses: chiefbiiko/setup-substrate@v0.1.1
+- uses: chiefbiiko/setup-substrate@v0.2.0
 ```
 
 ## Inputs
