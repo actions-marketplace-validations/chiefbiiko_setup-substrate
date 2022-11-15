@@ -9,7 +9,7 @@ A GitHub action that installs a Substrate Rust toolchain.
 ## Usage
 
 ```yml
-- uses: chiefbiiko/setup-substrate@v0.2.0
+- uses: chiefbiiko/setup-substrate@v0.2.1
 ```
 
 ## Inputs

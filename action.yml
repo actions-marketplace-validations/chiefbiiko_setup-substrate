@@ -41,12 +41,20 @@ runs:
         echo OS=$(echo ${{ runner.os }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
       shell: bash
 
-    - run: |
-        curl -sSf https://sh.rustup.rs | sh -s -- --default-toolchain ${{ inputs.nightly-version }} --profile minimal -c rustfmt clippy -y
-        source ~/.cargo/env
-        rustup update stable ${{ inputs.nightly-version }}
-        rustup target add wasm32-unknown-unknown --toolchain ${{ inputs.nightly-version }}
-      shell: bash
+    # - run: |
+    #     curl -sSf https://sh.rustup.rs | sh -s -- --default-toolchain ${{ inputs.nightly-version }} --profile minimal -c rustfmt clippy -y
+    #     source ~/.cargo/env
+    #     rustup update stable ${{ inputs.nightly-version }}
+    #     rustup target add wasm32-unknown-unknown --toolchain ${{ inputs.nightly-version }}
+    #   shell: bash
+
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: nightly
+        target: wasm32-unknown-unknown
+        default: true
+        profile: minimal
+        components: rustfmt, clippy
 
     - uses: actions/cache@v3
       with:
